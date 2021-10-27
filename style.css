@@ -1,7 +1,5 @@
 body {
   font-family: 'Lato', sans-serif;
-  background: -webkit-gradient(linear, left top, right top, color-stop(50%, #f7f7f7), color-stop(50%, white));
-  background: linear-gradient(90deg, #f7f7f7 50%, white 50%);
 }
 
 .game-button {
@@ -72,7 +70,7 @@ body {
 }
 
 .currentPlayerCursor {
-  color: #eb4d4c;
+  color: white;
 }
 
 .playerTitle {
@@ -139,15 +137,13 @@ body {
 }
 
 .diceBox .row-dice {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  display: none;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
 }
 
 .diceBox svg {
-  color: #eb4d4c;
+  color: white;
 }
 /*# sourceMappingURL=style.css.map */

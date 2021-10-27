@@ -4,7 +4,7 @@ $light-grey-color: rgb(217, 217, 217);
 
 body{
     font-family: 'Lato', sans-serif;
-    background: linear-gradient(90deg, rgb(247, 247, 247) 50%, rgb(255, 255, 255) 50%);
+
 }
 
 .game-button {
@@ -52,7 +52,8 @@ body{
 }
 
 .currentPlayerCursor {
-    color: $red-color;
+
+    color: white;
 }
 
 .playerTitle {
@@ -101,10 +102,10 @@ body{
     flex-direction: column;
     justify-content: space-between;
     .row-dice {
-        display: flex;
+        display: none;
         justify-content: space-between;
     }
     svg {
-        color: $red-color;
+        color: white;
     }
 }
