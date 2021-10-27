@@ -40,8 +40,22 @@ body{
     align-items: center;
 }
 
+.playerTitleCursor {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .currentPlayerCursor {
+        margin-left: 20px;
+    }
+}
+
+.currentPlayerCursor {
+    color: $red-color;
+}
+
 .playerTitle {
     font-weight: 300;
+    margin: 0;
 }
 
 .globalScore {
@@ -73,12 +87,22 @@ body{
     justify-content: space-between;
 }
 
-.canvasBox {
+.diceBox {
     align-self: end;
-}
-
-canvas {
-    background: white;
+    width: 80px;
+    height: 80px;
     border-radius: 5px;
     box-shadow: 0 0 5px rgb(213, 211, 214);
-  }
+    background: white;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .row-dice {
+        display: flex;
+        justify-content: space-between;
+    }
+    svg {
+        color: $red-color;
+    }
+}
