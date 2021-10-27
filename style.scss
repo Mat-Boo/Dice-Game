@@ -1,0 +1,84 @@
+$red-color: rgb(235, 77, 76);
+$dark-grey-color: rgb(90, 90, 90);
+$light-grey-color: rgb(217, 217, 217);
+
+body{
+    font-family: 'Lato', sans-serif;
+    background: linear-gradient(90deg, rgb(247, 247, 247) 50%, rgb(255, 255, 255) 50%);
+}
+
+.game-button {
+    display: flex;
+    justify-content: center;
+    p {
+        color: $dark-grey-color;
+        font-weight: 300;
+        font-size: 1.2em;
+        margin: 0;
+    }
+    .bi {
+        color: $red-color;
+        width: 2em;
+        margin-right: 10px;
+    }
+}
+
+.row-newGame {
+    margin-top: 3%;
+    margin-bottom: 7%;
+}
+
+.row-currentScores, .row-globalScores {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10%;
+}
+
+.player, .roundScoreBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.playerTitle {
+    font-weight: 300;
+}
+
+.globalScore {
+    color: $red-color;
+    font-size: 4em;
+    font-weight: 300;
+}
+
+.roundScoreBox {
+    background: $red-color;
+    padding: 10px 15px 5px 15px;
+}
+
+.roundScoreTitle {
+    color: black;
+    font-weight: 400;
+    font-size: 0.8em;
+}
+
+.roundScore {
+    color: white;
+    font-size: 1.5em;
+    font-weight: 300;
+}
+
+.low-game-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.canvasBox {
+    align-self: end;
+}
+
+canvas {
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgb(213, 211, 214);
+  }
