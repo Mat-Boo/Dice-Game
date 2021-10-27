@@ -11,6 +11,8 @@ body {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  background: none;
+  border: none;
 }
 
 .game-button p {
@@ -81,7 +83,7 @@ body {
 .globalScore {
   color: #eb4d4c;
   font-size: 4em;
-  font-weight: 300;
+  font-weight: 200;
 }
 
 .roundScoreBox {
