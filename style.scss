@@ -108,6 +108,24 @@ body{
     }
 }
 
+.modal-title {
+    color: $red-color;
+}
+
+.modal p {
+    text-align: center;
+}
+
+.modal .btn {
+    background: $red-color;
+    border: $red-color;
+    color: white;
+}
+
+
+
+
+
 @media screen and (min-width: 350px) and (max-width: 500px) {
     html {
         font-size: 12px;

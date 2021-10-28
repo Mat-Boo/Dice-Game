@@ -16,12 +16,57 @@ let dicePoint4 = document.querySelector('.row-dice .point4');
 let dicePoint5 = document.querySelector('.row-dice .point5');
 let dicePoint6 = document.querySelector('.row-dice .point6');
 let dicePoint7 = document.querySelector('.row-dice .point7');
-/* let modalWindow = document.querySelector('.modal');
-let infoModalWindow = document.querySelector('.modal p'); */
+let modalInfo = document.querySelector('#modalInfo');
+let textModalInfo = document.querySelector('#modalInfo p');
+let modalInfoCrossClose = document.querySelector('#modalInfo .btn-close');
+let modalInfoButtonClose = document.querySelector('#modalInfo .btn');
+let modalConfirm = document.querySelector('#modalConfirm');
+let modalConfirmCrossClose = document.querySelector('#modalConfirm .btn-close');
+let modalConfirmButtonNo = document.querySelector('#modalConfirm .btn-no');
+let modalConfirmButtonYes = document.querySelector('#modalConfirm .btn-yes');
+let modalConfirmValue = null;
 let newGameTag = false;
 let player = null;
 
-function newGame() {
+modalInfoCrossClose.onclick = () => {
+    modalInfo.style.display = 'none';
+}
+
+modalInfoButtonClose.onclick = () => {
+    modalInfo.style.display = 'none';
+}
+
+function showModal(textToDisplay) {
+    textModalInfo.innerText = textToDisplay;
+}
+
+function ModalConfirmAnswer() {
+    modalConfirmCrossClose.onclick = () => {
+        modalConfirm.style.display = 'none';
+        modalConfirmValue = false;
+        if (modalConfirmValue) {
+            createNewGame();
+        }
+    }
+    
+    modalConfirmButtonNo.onclick = () => {
+        modalConfirm.style.display = 'none';
+        modalConfirmValue = false;
+        if (modalConfirmValue) {
+            createNewGame();
+        }
+    }
+    
+    modalConfirmButtonYes.onclick = () => {
+        modalConfirm.style.display = 'none';
+        modalConfirmValue = true;
+        if (modalConfirmValue) {
+            createNewGame();
+        }
+    }
+}
+
+function createNewGame() {
     newGameTag = true;
     player = 1;
     player1GlobalScore.innerText = 0;
@@ -32,12 +77,17 @@ function newGame() {
     rollDiceButton.removeEventListener('click', endAlert);
     rollDiceButton.addEventListener('click', rollDice);
     holdButton.removeEventListener('click', endAlert);
-    holdButton.addEventListener('click', hold);    
+    holdButton.addEventListener('click', hold);
 }
 
-/* function showModal(infoToDisplay) {
-    infoModalWindow.innerText = infoToDisplay;
-} */
+function newGame() {
+    if (newGameTag) {
+        modalConfirm.style.display = 'block';
+        ModalConfirmAnswer();
+    } else {
+        createNewGame();
+    }
+}
 
 function newPlayer(playerToPlay) {
     player = playerToPlay;
@@ -151,36 +201,42 @@ function rollDice() {
             switch (player) {
                 case 1:
                     player1CurrentScore.innerText = 0;
-                    alert(`Vous avez malheureusement fait 1, votre score courant repasse à 0.\nC\'est au tour du joueur 2.`);
+                    showModal(`Vous avez malheureusement fait 1, votre score courant repasse à 0.\n\nC\'est au tour du joueur 2.`);
+                    modalInfo.style.display = 'block';
                     newPlayer(2);
                     break;
                 case 2:
                     player2CurrentScore.innerText = 0;
-                    alert(`Vous avez malheureusement fait 1, votre score courant repasse à 0.\nC\'est au tour du joueur 1.`);
+                    showModal(`Vous avez malheureusement fait 1, votre score courant repasse à 0.\n\nC\'est au tour du joueur 1.`);
+                    modalInfo.style.display = 'block';
                     newPlayer(1);
                     break;
             } 
         }
     } else {
-        alert('Veuillez d\'abord lancer une nouvelle partie en cliquant sur "NEW GAME".');
+        showModal('Veuillez d\'abord lancer une nouvelle partie en cliquant sur le bouton :\n"NEW GAME"');
+        modalInfo.style.display = 'block';
     }
 }
 
 function hold() {
     if (newGameTag) {
         if (player1CurrentScore.innerText == 0 && player2CurrentScore.innerText == 0) {
-            alert(`Lancez au moins une fois le dé en cliquant sur le bouton "ROLL DICE".\nC\'est au joueur ${player} de jouer.`);
+            showModal(`Lancez au moins une fois le dé en cliquant sur le bouton :\n"ROLL DICE"\n\nC\'est au joueur ${player} de jouer.`);
+            modalInfo.style.display = 'block';
         } else {
             switch (player) {
                 case 1:
                     player1GlobalScore.innerText = parseInt(player1GlobalScore.innerText) + parseInt(player1CurrentScore.innerText);
                     player1CurrentScore.innerText = 0;
-                    if (player1GlobalScore.innerText >= 100) {
+                    if (player1GlobalScore.innerText >= 10) {
+                        showModal('***** FELICITATION *****\nLe joueur 1 a gagné en atteignant le 1er les 100 points.');
+                        modalInfo.style.display = 'block';
+                        newGameTag = false;
                         rollDiceButton.removeEventListener('click', rollDice);
                         rollDiceButton.addEventListener('click', endAlert);
                         holdButton.removeEventListener('click', hold);
                         holdButton.addEventListener('click', endAlert);
-                        alert('***** FELICITATION *****\nLe joueur 1 a gagné en atteignant le 1er les 100 points.')
                     } else {
                         newPlayer(2);
                     }
@@ -189,11 +245,13 @@ function hold() {
                     player2GlobalScore.innerText = parseInt(player2GlobalScore.innerText) + parseInt(player2CurrentScore.innerText);
                     player2CurrentScore.innerText = 0;
                     if (player2GlobalScore.innerText >= 100) {
+                        showModal('***** FELICITATION *****\nLe joueur 2 a gagné en atteignant le 1er les 100 points.');
+                        modalInfo.style.display = 'block';
+                        newGameTag = false;
                         rollDiceButton.removeEventListener('click', rollDice);
                         rollDiceButton.addEventListener('click', endAlert);
                         holdButton.removeEventListener('click', hold);
                         holdButton.addEventListener('click', endAlert);
-                        alert('***** FELICITATION *****\nLe joueur 2 a gagné en atteignant le 1er les 100 points.')
                     } else {
                         newPlayer(1);
                     }
@@ -201,12 +259,14 @@ function hold() {
             }
         }    
     } else {
-        alert('Veuillez d\'abord lancer une nouvelle partie en cliquant sur "NEW GAME".');
+        showModal('Veuillez d\'abord lancer une nouvelle partie en cliquant sur le bouton :\n"NEW GAME"');
+        modalInfo.style.display = 'block';
     }
 }
 
 function endAlert() {
-    alert('La partie est terminée.\nSi vous souhaitez faire une nouvelle partie, cliquez sur le bouton "NEW GAME"');
+    showModal('La partie est terminée.\nSi vous souhaitez faire une nouvelle partie, cliquez sur le bouton :\n"NEW GAME"');
+    modalInfo.style.display = 'block';
 }
 
 newGameButton.addEventListener('click', newGame);
