@@ -1,3 +1,4 @@
+/* Create variables from DOM */
 let body = document.querySelector('body');
 let newGameButton = document.querySelector('.newGame-button');
 let player1GlobalScore = document.querySelector('.player1 .globalScore');
@@ -24,40 +25,41 @@ let modalConfirm = document.querySelector('#modalConfirm');
 let modalConfirmCrossClose = document.querySelector('#modalConfirm .btn-close');
 let modalConfirmButtonNo = document.querySelector('#modalConfirm .btn-no');
 let modalConfirmButtonYes = document.querySelector('#modalConfirm .btn-yes');
+/* END of Create variables from DOM */
+
+/* Others variables */
 let modalConfirmValue = null;
 let newGameTag = false;
 let player = null;
+/* END of Others variables */
 
-modalInfoCrossClose.onclick = () => {
+/* Modal Window with information */
+modalInfoCrossClose.onclick = () => {//function to close the information modal window when clicking on Cross
     modalInfo.style.display = 'none';
 }
 
-modalInfoButtonClose.onclick = () => {
+modalInfoButtonClose.onclick = () => {//function to close the information modal window when clicking on Close button
     modalInfo.style.display = 'none';
 }
 
-function showModal(textToDisplay) {
+function showModal(textToDisplay) {//Function to display a the information modal window
     textModalInfo.innerText = textToDisplay;
 }
+/* END of Modal Window with information */
 
-function ModalConfirmAnswer() {
-    modalConfirmCrossClose.onclick = () => {
+/* Modal Window with confirmation */
+function ModalConfirmAnswer() {//Function to display a modal window with confirmation when you click on New Game Button and a game is running
+    modalConfirmCrossClose.onclick = () => {//function to close the confirmation modal window when clicking on Cross and nothing happens, the game coninue
         modalConfirm.style.display = 'none';
         modalConfirmValue = false;
-        if (modalConfirmValue) {
-            createNewGame();
-        }
     }
     
-    modalConfirmButtonNo.onclick = () => {
+    modalConfirmButtonNo.onclick = () => {//function to close the confirmation modal window when clicking on No Button and nothing happens, the game coninue
         modalConfirm.style.display = 'none';
         modalConfirmValue = false;
-        if (modalConfirmValue) {
-            createNewGame();
-        }
     }
     
-    modalConfirmButtonYes.onclick = () => {
+    modalConfirmButtonYes.onclick = () => {//function to close the confirmation modal window when clicking on Yes Button and and function createNewGame is calling
         modalConfirm.style.display = 'none';
         modalConfirmValue = true;
         if (modalConfirmValue) {
@@ -65,8 +67,10 @@ function ModalConfirmAnswer() {
         }
     }
 }
+/* END of Modal Window with confirmation */
 
-function createNewGame() {
+
+function createNewGame() {//Function to create a new game
     newGameTag = true;
     player = 1;
     player1GlobalScore.innerText = 0;
@@ -80,8 +84,8 @@ function createNewGame() {
     holdButton.addEventListener('click', hold);
 }
 
-function newGame() {
-    if (newGameTag) {
+function newGame() {//Function to create a new game but control if a gamme is running
+    if (newGameTag) {// Control if game is running
         modalConfirm.style.display = 'block';
         ModalConfirmAnswer();
     } else {
@@ -89,7 +93,7 @@ function newGame() {
     }
 }
 
-function newPlayer(playerToPlay) {
+function newPlayer(playerToPlay) {// Function to highlight the current player with the background and cursor
     player = playerToPlay;
     switch (playerToPlay) {
         case 1:
@@ -111,10 +115,10 @@ function newPlayer(playerToPlay) {
     }
 }
 
-function rollDice() {
-    if (newGameTag) {
-        let result = Math.floor(Math.random() * 6) + 1;
-        switch (result) {
+function rollDice() {// Function to simulate the roll of dice
+    if (newGameTag) {// Control if game is running
+        let result = Math.floor(Math.random() * 6) + 1; //generate a random number between [1 - 6]
+        switch (result) {//According to the value of result, display the points on dice
             case 1:
                 for (let rowDice of rowsDice) {
                     rowDice.style.display = 'flex';
@@ -188,7 +192,7 @@ function rollDice() {
                 dicePoint7.style.color = 'rgb(235, 77, 76)';
                 break;  
         }
-        if (result !== 1) {
+        if (result !== 1) {//If the value of result doesn't equal to 1, the value of result is added to current score according to player
             switch (player) {
                 case 1:
                     player1CurrentScore.innerText = parseInt(player1CurrentScore.innerText) + result;
@@ -198,7 +202,7 @@ function rollDice() {
                     break;
             }
         } else {
-            switch (player) {
+            switch (player) {//If value of result equals to 1, display message in modal window and change player
                 case 1:
                     player1CurrentScore.innerText = 0;
                     showModal(`Vous avez malheureusement fait 1, votre score courant repasse à 0.\n\nC\'est au tour du joueur 2.`);
@@ -219,20 +223,21 @@ function rollDice() {
     }
 }
 
-function hold() {
-    if (newGameTag) {
-        if (player1CurrentScore.innerText == 0 && player2CurrentScore.innerText == 0) {
+function hold() {// function to add the current score to the global score and verify if the 100 points are reached
+    if (newGameTag) {// Control if game is running
+        if (player1CurrentScore.innerText == 0 && player2CurrentScore.innerText == 0) {// Control if dice rolled at least 1 time before holding
             showModal(`Lancez au moins une fois le dé en cliquant sur le bouton :\n"ROLL DICE"\n\nC\'est au joueur ${player} de jouer.`);
             modalInfo.style.display = 'block';
         } else {
-            switch (player) {
+            switch (player) {//function to add current score to global score according to player and put current score to 0
                 case 1:
                     player1GlobalScore.innerText = parseInt(player1GlobalScore.innerText) + parseInt(player1CurrentScore.innerText);
                     player1CurrentScore.innerText = 0;
-                    if (player1GlobalScore.innerText >= 100) {
+                    if (player1GlobalScore.innerText >= 100) {// Control if 100 points are reached
                         showModal('***** FELICITATION *****\nLe joueur 1 a gagné en atteignant le 1er les 100 points.');
                         modalInfo.style.display = 'block';
                         newGameTag = false;
+                        /* Remove events on buttons Roll Dice and Hold and put a new one to show a message for the end of game */
                         rollDiceButton.removeEventListener('click', rollDice);
                         rollDiceButton.addEventListener('click', endAlert);
                         holdButton.removeEventListener('click', hold);
@@ -244,10 +249,11 @@ function hold() {
                 case 2:
                     player2GlobalScore.innerText = parseInt(player2GlobalScore.innerText) + parseInt(player2CurrentScore.innerText);
                     player2CurrentScore.innerText = 0;
-                    if (player2GlobalScore.innerText >= 100) {
+                    if (player2GlobalScore.innerText >= 100) {// Control if 100 points are reached
                         showModal('***** FELICITATION *****\nLe joueur 2 a gagné en atteignant le 1er les 100 points.');
                         modalInfo.style.display = 'block';
                         newGameTag = false;
+                        /* Remove events on buttons Roll Dice and Hold and put a new one to show a message for the end of game */
                         rollDiceButton.removeEventListener('click', rollDice);
                         rollDiceButton.addEventListener('click', endAlert);
                         holdButton.removeEventListener('click', hold);
@@ -264,7 +270,7 @@ function hold() {
     }
 }
 
-function endAlert() {
+function endAlert() {// Function to display a message about the end of game
     showModal('La partie est terminée.\nSi vous souhaitez faire une nouvelle partie, cliquez sur le bouton :\n"NEW GAME"');
     modalInfo.style.display = 'block';
 }

@@ -6,6 +6,7 @@ body{
     font-family: 'Lato', sans-serif;
 }
 
+/* Game Buttons */
 .game-button {
     display: flex;
     justify-content: center;
@@ -29,6 +30,14 @@ body{
     margin-bottom: 7%;
 }
 
+.low-game-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+/* END of Game Buttons */
+
+/* Player with Global Score and Current Cursor */
 .row-currentScores, .row-globalScores {
     display: flex;
     justify-content: space-around;
@@ -64,7 +73,9 @@ body{
     font-size: 4rem;
     font-weight: 200;
 }
+/* END of Player with Global Score and Current Cursor */
 
+/* Current Score */
 .roundScoreBox {
     background: $red-color;
     padding: 10px 20px 5px 20px;
@@ -81,13 +92,9 @@ body{
     font-size: 1.5rem;
     font-weight: 300;
 }
+/* END of Current Score */
 
-.low-game-buttons {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
+/* Dice Box */
 .diceBox {
     align-self: end;
     width: 80px;
@@ -107,7 +114,9 @@ body{
         color: white;
     }
 }
+/* END of Dice Box */
 
+/* Modal Window */
 .modal-title {
     color: $red-color;
 }
@@ -121,12 +130,11 @@ body{
     border: $red-color;
     color: white;
 }
-
-
-
+/* END of Modal Window */
 
 
 @media screen and (min-width: 350px) and (max-width: 500px) {
+    /* Reduce font size and dice box size for resolution between 350px and 500px */
     html {
         font-size: 12px;
     }
@@ -137,6 +145,7 @@ body{
 }
 
 @media screen and (max-width: 349px) {
+    /* Reduce font size and dice box size for resolution below 350px */
     html {
         font-size: 9px;
     }
