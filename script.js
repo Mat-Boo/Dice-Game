@@ -16,6 +16,8 @@ let dicePoint4 = document.querySelector('.row-dice .point4');
 let dicePoint5 = document.querySelector('.row-dice .point5');
 let dicePoint6 = document.querySelector('.row-dice .point6');
 let dicePoint7 = document.querySelector('.row-dice .point7');
+/* let modalWindow = document.querySelector('.modal');
+let infoModalWindow = document.querySelector('.modal p'); */
 let newGameTag = false;
 let player = null;
 
@@ -27,9 +29,15 @@ function newGame() {
     player1CurrentScore.innerText = 0;
     player2CurrentScore.innerText = 0;
     newPlayer(player);
+    rollDiceButton.removeEventListener('click', endAlert);
     rollDiceButton.addEventListener('click', rollDice);
+    holdButton.removeEventListener('click', endAlert);
     holdButton.addEventListener('click', hold);    
 }
+
+/* function showModal(infoToDisplay) {
+    infoModalWindow.innerText = infoToDisplay;
+} */
 
 function newPlayer(playerToPlay) {
     player = playerToPlay;
@@ -55,7 +63,7 @@ function newPlayer(playerToPlay) {
 
 function rollDice() {
     if (newGameTag) {
-        let result = Math.ceil(Math.abs(Math.random() * 10 - 4));
+        let result = Math.floor(Math.random() * 6) + 1;
         switch (result) {
             case 1:
                 for (let rowDice of rowsDice) {
@@ -167,19 +175,24 @@ function hold() {
                 case 1:
                     player1GlobalScore.innerText = parseInt(player1GlobalScore.innerText) + parseInt(player1CurrentScore.innerText);
                     player1CurrentScore.innerText = 0;
-                    if (player1GlobalScore.innerText >= 10) {
+                    if (player1GlobalScore.innerText >= 100) {
                         rollDiceButton.removeEventListener('click', rollDice);
+                        rollDiceButton.addEventListener('click', endAlert);
                         holdButton.removeEventListener('click', hold);
+                        holdButton.addEventListener('click', endAlert);
                         alert('***** FELICITATION *****\nLe joueur 1 a gagné en atteignant le 1er les 100 points.')
+                        
                     }
                     newPlayer(2);
                     break;
                 case 2:
                     player2GlobalScore.innerText = parseInt(player2GlobalScore.innerText) + parseInt(player2CurrentScore.innerText);
                     player2CurrentScore.innerText = 0;
-                    if (player2GlobalScore.innerText >= 10) {
+                    if (player2GlobalScore.innerText >= 100) {
                         rollDiceButton.removeEventListener('click', rollDice);
+                        rollDiceButton.addEventListener('click', endAlert);
                         holdButton.removeEventListener('click', hold);
+                        holdButton.addEventListener('click', endAlert);
                         alert('***** FELICITATION *****\nLe joueur 2 a gagné en atteignant le 1er les 100 points.')
                     }
                     newPlayer(1);
@@ -189,6 +202,10 @@ function hold() {
     } else {
         alert('Veuillez d\'abord lancer une nouvelle partie en cliquant sur "NEW GAME".');
     }
+}
+
+function endAlert() {
+    alert('La partie est terminée.\nSi vous souhaitez faire une nouvelle partie, cliquez sur le bouton "NEW GAME"');
 }
 
 newGameButton.addEventListener('click', newGame);
