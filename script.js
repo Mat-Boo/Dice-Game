@@ -181,9 +181,9 @@ function hold() {
                         holdButton.removeEventListener('click', hold);
                         holdButton.addEventListener('click', endAlert);
                         alert('***** FELICITATION *****\nLe joueur 1 a gagné en atteignant le 1er les 100 points.')
-                        
+                    } else {
+                        newPlayer(2);
                     }
-                    newPlayer(2);
                     break;
                 case 2:
                     player2GlobalScore.innerText = parseInt(player2GlobalScore.innerText) + parseInt(player2CurrentScore.innerText);
@@ -194,8 +194,9 @@ function hold() {
                         holdButton.removeEventListener('click', hold);
                         holdButton.addEventListener('click', endAlert);
                         alert('***** FELICITATION *****\nLe joueur 2 a gagné en atteignant le 1er les 100 points.')
+                    } else {
+                        newPlayer(1);
                     }
-                    newPlayer(1);
                     break; 
             }
         }    
