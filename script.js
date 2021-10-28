@@ -34,16 +34,37 @@ let player = null;
 /* END of Others variables */
 
 /* Modal Window with information */
-modalInfoCrossClose.addEventListener('click', () => {//function to close the information modal window when clicking on Cross
-    modalInfo.style.display = 'none';
-})
-
-modalInfoButtonClose.addEventListener('click', () => {//function to close the information modal window when clicking on Close button
-    modalInfo.style.display = 'none';
-})
-
-function showModal(textToDisplay) {//Function to display a the information modal window
+function showModal(textToDisplay) {//Function to display the information modal window
     textModalInfo.innerText = textToDisplay;
+}
+
+function hideModalInfo() {//Function to hide the information modal window
+    modalInfo.style.display = 'none';
+}
+
+function ModalInfoCloseCrossButtons() {//Function which removes listener on cross et close buttons on information modal window and new by calling the hideModalInfo function
+    modalInfoCrossClose.removeEventListener('click', hideModalInfoAfter1);
+    modalInfoCrossClose.addEventListener('click', hideModalInfo)
+    modalInfoButtonClose.removeEventListener('click', hideModalInfoAfter1);
+    modalInfoButtonClose.addEventListener('click', hideModalInfo);
+}
+
+function hideModalInfoAfter1() {//Function to hide the information modal window after playing 1 with dice but current score et dice still displayed
+    modalInfo.style.display = 'none';
+    if (player === 1) {
+        player1CurrentScore.innerText = 0;
+        newPlayer(2);
+    } else {
+        player2CurrentScore.innerText = 0;
+        newPlayer(1);
+    }
+}
+
+function ModalInfoAfter1CloseCrossButtons() {//Function which removes listener on cross et close buttons on information modal window and new by calling the hideModalInfoAfter1 function
+    modalInfoCrossClose.removeEventListener('click', hideModalInfo);
+    modalInfoCrossClose.addEventListener('click', hideModalInfoAfter1);
+    modalInfoButtonClose.removeEventListener('click', hideModalInfo);
+    modalInfoButtonClose.addEventListener('click', hideModalInfoAfter1);
 }
 /* END of Modal Window with information */
 
@@ -83,6 +104,7 @@ function createNewGame() {//Function to create a new game
     holdButton.removeEventListener('click', endAlert);
     holdButton.addEventListener('click', hold);
     gameRules();
+    ModalInfoCloseCrossButtons()
 }
 
 function newGame() {//Function to create a new game but control if a gamme is running
@@ -222,22 +244,21 @@ function rollDice() {// Function to simulate the roll of dice
         } else {
             switch (player) {//If value of result equals to 1, display message in modal window and change player
                 case 1:
-                    player1CurrentScore.innerText = 0;
                     showModal(`Vous avez malheureusement fait 1, votre score courant repasse à 0.\n\nC\'est au tour du joueur 2.`);
                     modalInfo.style.display = 'block';
-                    newPlayer(2);
+                    ModalInfoAfter1CloseCrossButtons();
                     break;
                 case 2:
-                    player2CurrentScore.innerText = 0;
                     showModal(`Vous avez malheureusement fait 1, votre score courant repasse à 0.\n\nC\'est au tour du joueur 1.`);
                     modalInfo.style.display = 'block';
-                    newPlayer(1);
+                    ModalInfoAfter1CloseCrossButtons();
                     break;
             } 
         }
     } else {
         showModal('Veuillez d\'abord lancer une nouvelle partie en cliquant sur le bouton :\n"NEW GAME"');
         modalInfo.style.display = 'block';
+        ModalInfoCloseCrossButtons();
     }
 }
 
@@ -246,6 +267,7 @@ function hold() {// function to add the current score to the global score and ve
         if (player1CurrentScore.innerText == 0 && player2CurrentScore.innerText == 0) {// Control if dice rolled at least 1 time before holding
             showModal(`Lancez au moins une fois le dé en cliquant sur le bouton :\n"ROLL DICE"\n\nC\'est au joueur ${player} de jouer.`);
             modalInfo.style.display = 'block';
+            ModalInfoCloseCrossButtons();
         } else {
             switch (player) {//function to add current score to global score according to player and put current score to 0
                 case 1:
@@ -260,6 +282,7 @@ function hold() {// function to add the current score to the global score and ve
                         rollDiceButton.addEventListener('click', endAlert);
                         holdButton.removeEventListener('click', hold);
                         holdButton.addEventListener('click', endAlert);
+                        ModalInfoCloseCrossButtons();
                     } else {
                         newPlayer(2);
                     }
@@ -276,6 +299,7 @@ function hold() {// function to add the current score to the global score and ve
                         rollDiceButton.addEventListener('click', endAlert);
                         holdButton.removeEventListener('click', hold);
                         holdButton.addEventListener('click', endAlert);
+                        ModalInfoCloseCrossButtons();
                     } else {
                         newPlayer(1);
                     }
@@ -285,12 +309,14 @@ function hold() {// function to add the current score to the global score and ve
     } else {
         showModal('Veuillez d\'abord lancer une nouvelle partie en cliquant sur le bouton :\n"NEW GAME"');
         modalInfo.style.display = 'block';
+        ModalInfoCloseCrossButtons();
     }
 }
 
 function endAlert() {// Function to display a message about the end of game
     showModal('La partie est terminée.\nSi vous souhaitez faire une nouvelle partie, cliquez sur le bouton :\n"NEW GAME"');
     modalInfo.style.display = 'block';
+    ModalInfoCloseCrossButtons();
 }
 
 newGameButton.addEventListener('click', newGame);
