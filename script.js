@@ -82,6 +82,7 @@ function createNewGame() {//Function to create a new game
     rollDiceButton.addEventListener('click', rollDice);
     holdButton.removeEventListener('click', endAlert);
     holdButton.addEventListener('click', hold);
+    gameRules();
 }
 
 function newGame() {//Function to create a new game but control if a gamme is running
@@ -113,6 +114,23 @@ function newPlayer(playerToPlay) {// Function to highlight the current player wi
             }
             break;
     }
+}
+
+function gameRules() {//Function to display the rules of game when starts a new game
+    showModal(`Règles :
+        Le jeu comprend 2 joueurs sur un seul et même écran.
+        Chaque joueur possède un score temporaire en bas sur fond rouge et un score global, sous le player.
+
+        À chaque tour, le joueur a son score temporaire initialisé à 0 et peut lancer un dé autant de fois qu'il le souhaite avec le bouton "ROLL DICE".
+        Le résultat d’un lancer est ajouté au score temporaire.
+
+        Lors de son tour, le joueur peut décider à tout moment de :
+        - Cliquer sur le bouton "HOLD", qui permet d’envoyer les points du score temporaire vers le score global.
+        Ce sera alors le tour de l’autre joueur.
+        - Lancer le dé et s’il obtient un 1, son score temporaire est perdu, remis à 0 et c’est la fin de son tour.
+
+        Le premier joueur qui atteint les 100 points sur le score global gagne le jeu.`);
+    modalInfo.style.display = 'block';
 }
 
 function rollDice() {// Function to simulate the roll of dice
