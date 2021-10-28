@@ -34,13 +34,13 @@ let player = null;
 /* END of Others variables */
 
 /* Modal Window with information */
-modalInfoCrossClose.onclick = () => {//function to close the information modal window when clicking on Cross
+modalInfoCrossClose.addEventListener('click', () => {//function to close the information modal window when clicking on Cross
     modalInfo.style.display = 'none';
-}
+})
 
-modalInfoButtonClose.onclick = () => {//function to close the information modal window when clicking on Close button
+modalInfoButtonClose.addEventListener('click', () => {//function to close the information modal window when clicking on Close button
     modalInfo.style.display = 'none';
-}
+})
 
 function showModal(textToDisplay) {//Function to display a the information modal window
     textModalInfo.innerText = textToDisplay;
@@ -49,23 +49,23 @@ function showModal(textToDisplay) {//Function to display a the information modal
 
 /* Modal Window with confirmation */
 function ModalConfirmAnswer() {//Function to display a modal window with confirmation when you click on New Game Button and a game is running
-    modalConfirmCrossClose.onclick = () => {//function to close the confirmation modal window when clicking on Cross and nothing happens, the game coninue
+    modalConfirmCrossClose.addEventListener('click', () => {//function to close the confirmation modal window when clicking on Cross and nothing happens, the game coninue
         modalConfirm.style.display = 'none';
         modalConfirmValue = false;
-    }
+    })
     
-    modalConfirmButtonNo.onclick = () => {//function to close the confirmation modal window when clicking on No Button and nothing happens, the game coninue
+    modalConfirmButtonNo.addEventListener('click', () => {//function to close the confirmation modal window when clicking on No Button and nothing happens, the game coninue
         modalConfirm.style.display = 'none';
         modalConfirmValue = false;
-    }
+    })
     
-    modalConfirmButtonYes.onclick = () => {//function to close the confirmation modal window when clicking on Yes Button and and function createNewGame is calling
+    modalConfirmButtonYes.addEventListener('click', () => {//function to close the confirmation modal window when clicking on Yes Button and and function createNewGame is calling
         modalConfirm.style.display = 'none';
         modalConfirmValue = true;
         if (modalConfirmValue) {
             createNewGame();
         }
-    }
+    })
 }
 /* END of Modal Window with confirmation */
 
