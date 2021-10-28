@@ -229,7 +229,7 @@ function hold() {
                 case 1:
                     player1GlobalScore.innerText = parseInt(player1GlobalScore.innerText) + parseInt(player1CurrentScore.innerText);
                     player1CurrentScore.innerText = 0;
-                    if (player1GlobalScore.innerText >= 10) {
+                    if (player1GlobalScore.innerText >= 100) {
                         showModal('***** FELICITATION *****\nLe joueur 1 a gagné en atteignant le 1er les 100 points.');
                         modalInfo.style.display = 'block';
                         newGameTag = false;
