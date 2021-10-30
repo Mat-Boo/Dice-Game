@@ -1,5 +1,7 @@
 /* Create variables from DOM */
 let body = document.querySelector('body');
+let main = document.querySelector('main');
+let rowNewGame = document.querySelector('.row-newGame');
 let newGameButton = document.querySelector('.newGame-button');
 let player1GlobalScore = document.querySelector('.player1 .globalScore');
 let player1CurrentCursor = document.querySelector('.player1 .playerTitleCursor .currentPlayerCursor')
@@ -25,6 +27,7 @@ let modalConfirm = document.querySelector('#modalConfirm');
 let modalConfirmCrossClose = document.querySelector('#modalConfirm .btn-close');
 let modalConfirmButtonNo = document.querySelector('#modalConfirm .btn-no');
 let modalConfirmButtonYes = document.querySelector('#modalConfirm .btn-yes');
+let modalInfoContent = document.querySelector('#modalInfo .modal-content');
 /* END of Create variables from DOM */
 
 /* Others variables */
@@ -34,9 +37,36 @@ let player = null;
 /* END of Others variables */
 
 /* Modal Window with information */
-function showModal(textToDisplay) {//Function to display the information modal window
+/* let mainHeight = main.clientHeight;
+let styleRowNewGame = rowNewGame.currentStyle || window.getComputedStyle(rowNewGame);
+let topModalInfo = parseInt(mainHeight) + parseInt(styleRowNewGame.marginTop)
+modalInfo.style.top = `${topModalInfo}px`; */
+
+console.log(window.innerHeight);
+console.log(main.clientHeight);
+console.log(modalInfoContent.clientHeight);
+
+function showModalInfo(textToDisplay) {//Function to display the information modal window according to the available space below the game
+    let mainHeight = main.clientHeight;
+    let styleRowNewGame = rowNewGame.currentStyle || window.getComputedStyle(rowNewGame);
+    let topModalInfo = parseInt(mainHeight) + parseInt(styleRowNewGame.marginTop)
+    if (window.innerHeight - mainHeight > 276) {
+        topModalInfo = `${topModalInfo}px`;
+    }
+    modalInfo.style.top = topModalInfo;
     textModalInfo.innerText = textToDisplay;
 }
+
+/* function showModalInfo(textToDisplay) {//Function to display the information modal window
+    let positionModalInfo = '';
+    if (window.innerHeight - main.clientHeight > 276) {
+        positionModalInfo = 'static';
+    }   else {
+        positionModalInfo = 'absolute';
+    }
+    modalInfo.style.position = positionModalInfo;
+    textModalInfo.innerText = textToDisplay;
+} */
 
 function hideModalInfo() {//Function to hide the information modal window
     modalInfo.style.display = 'none';
@@ -139,7 +169,7 @@ function newPlayer(playerToPlay) {// Function to highlight the current player wi
 }
 
 function gameRules() {//Function to display the rules of game when starts a new game
-    showModal(`Règles :
+    showModalInfo(`Règles :
         Le jeu comprend 2 joueurs sur un seul et même écran.
         Chaque joueur possède un score temporaire en bas sur fond rouge et un score global, sous le player.
 
@@ -152,7 +182,9 @@ function gameRules() {//Function to display the rules of game when starts a new 
         - Lancer le dé et s’il obtient un 1, son score temporaire est perdu, remis à 0 et c’est la fin de son tour.
 
         Le premier joueur qui atteint les 100 points sur le score global gagne le jeu.`);
+    modalInfo.style.top = 0;
     modalInfo.style.display = 'block';
+    
 }
 
 function rollDice() {// Function to simulate the roll of dice
@@ -244,19 +276,19 @@ function rollDice() {// Function to simulate the roll of dice
         } else {
             switch (player) {//If value of result equals to 1, display message in modal window and change player
                 case 1:
-                    showModal(`Vous avez malheureusement fait 1, votre score courant repasse à 0.\n\nC\'est au tour du joueur 2.`);
+                    showModalInfo(`Vous avez malheureusement fait 1, votre score courant repasse à 0.\n\nC\'est au tour du joueur 2.`);
                     modalInfo.style.display = 'block';
                     ModalInfoAfter1CloseCrossButtons();
                     break;
                 case 2:
-                    showModal(`Vous avez malheureusement fait 1, votre score courant repasse à 0.\n\nC\'est au tour du joueur 1.`);
+                    showModalInfo(`Vous avez malheureusement fait 1, votre score courant repasse à 0.\n\nC\'est au tour du joueur 1.`);
                     modalInfo.style.display = 'block';
                     ModalInfoAfter1CloseCrossButtons();
                     break;
             } 
         }
     } else {
-        showModal('Veuillez d\'abord lancer une nouvelle partie en cliquant sur le bouton :\n"NEW GAME"');
+        showModalInfo('Veuillez d\'abord lancer une nouvelle partie en cliquant sur le bouton :\n"NEW GAME"');
         modalInfo.style.display = 'block';
         ModalInfoCloseCrossButtons();
     }
@@ -265,7 +297,7 @@ function rollDice() {// Function to simulate the roll of dice
 function hold() {// function to add the current score to the global score and verify if the 100 points are reached
     if (newGameTag) {// Control if game is running
         if (player1CurrentScore.innerText == 0 && player2CurrentScore.innerText == 0) {// Control if dice rolled at least 1 time before holding
-            showModal(`Lancez au moins une fois le dé en cliquant sur le bouton :\n"ROLL DICE"\n\nC\'est au joueur ${player} de jouer.`);
+            showModalInfo(`Lancez au moins une fois le dé en cliquant sur le bouton :\n"ROLL DICE"\n\nC\'est au joueur ${player} de jouer.`);
             modalInfo.style.display = 'block';
             ModalInfoCloseCrossButtons();
         } else {
@@ -274,7 +306,7 @@ function hold() {// function to add the current score to the global score and ve
                     player1GlobalScore.innerText = parseInt(player1GlobalScore.innerText) + parseInt(player1CurrentScore.innerText);
                     player1CurrentScore.innerText = 0;
                     if (player1GlobalScore.innerText >= 100) {// Control if 100 points are reached
-                        showModal('***** FELICITATION *****\nLe joueur 1 a gagné en atteignant le 1er les 100 points.');
+                        showModalInfo('***** FELICITATION *****\nLe joueur 1 a gagné en atteignant le 1er les 100 points.');
                         modalInfo.style.display = 'block';
                         newGameTag = false;
                         /* Remove events on buttons Roll Dice and Hold and put a new one to show a message for the end of game */
@@ -291,7 +323,7 @@ function hold() {// function to add the current score to the global score and ve
                     player2GlobalScore.innerText = parseInt(player2GlobalScore.innerText) + parseInt(player2CurrentScore.innerText);
                     player2CurrentScore.innerText = 0;
                     if (player2GlobalScore.innerText >= 100) {// Control if 100 points are reached
-                        showModal('***** FELICITATION *****\nLe joueur 2 a gagné en atteignant le 1er les 100 points.');
+                        showModalInfo('***** FELICITATION *****\nLe joueur 2 a gagné en atteignant le 1er les 100 points.');
                         modalInfo.style.display = 'block';
                         newGameTag = false;
                         /* Remove events on buttons Roll Dice and Hold and put a new one to show a message for the end of game */
@@ -307,14 +339,14 @@ function hold() {// function to add the current score to the global score and ve
             }
         }    
     } else {
-        showModal('Veuillez d\'abord lancer une nouvelle partie en cliquant sur le bouton :\n"NEW GAME"');
+        showModalInfo('Veuillez d\'abord lancer une nouvelle partie en cliquant sur le bouton :\n"NEW GAME"');
         modalInfo.style.display = 'block';
         ModalInfoCloseCrossButtons();
     }
 }
 
 function endAlert() {// Function to display a message about the end of game
-    showModal('La partie est terminée.\nSi vous souhaitez faire une nouvelle partie, cliquez sur le bouton :\n"NEW GAME"');
+    showModalInfo('La partie est terminée.\nSi vous souhaitez faire une nouvelle partie, cliquez sur le bouton :\n"NEW GAME"');
     modalInfo.style.display = 'block';
     ModalInfoCloseCrossButtons();
 }
