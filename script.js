@@ -27,7 +27,6 @@ let modalConfirm = document.querySelector('#modalConfirm');
 let modalConfirmCrossClose = document.querySelector('#modalConfirm .btn-close');
 let modalConfirmButtonNo = document.querySelector('#modalConfirm .btn-no');
 let modalConfirmButtonYes = document.querySelector('#modalConfirm .btn-yes');
-let modalInfoContent = document.querySelector('#modalInfo .modal-content');
 /* END of Create variables from DOM */
 
 /* Others variables */
@@ -61,8 +60,10 @@ function hideModalInfo() {//Function to hide the information modal window
 
 function ModalInfoCloseCrossButtons() {//Function which removes listener on cross et close buttons on information modal window and add new by calling the hideModalInfo function
     modalInfoCrossClose.removeEventListener('click', hideModalInfoAfter1);
+    modalInfoCrossClose.removeEventListener('click', hideModalInfoAfterFinishGame);
     modalInfoCrossClose.addEventListener('click', hideModalInfo)
     modalInfoButtonClose.removeEventListener('click', hideModalInfoAfter1);
+    modalInfoButtonClose.removeEventListener('click', hideModalInfoAfterFinishGame);
     modalInfoButtonClose.addEventListener('click', hideModalInfo);
 }
 
@@ -82,9 +83,27 @@ function hideModalInfoAfter1() {//Function to hide the information modal window 
 
 function ModalInfoAfter1CloseCrossButtons() {//Function which removes listener on cross et close buttons on information modal window and add new by calling the hideModalInfoAfter1 function
     modalInfoCrossClose.removeEventListener('click', hideModalInfo);
+    modalInfoCrossClose.removeEventListener('click', hideModalInfoAfterFinishGame);
     modalInfoCrossClose.addEventListener('click', hideModalInfoAfter1);
     modalInfoButtonClose.removeEventListener('click', hideModalInfo);
+    modalInfoButtonClose.removeEventListener('click', hideModalInfoAfterFinishGame);
     modalInfoButtonClose.addEventListener('click', hideModalInfoAfter1);
+}
+
+function hideModalInfoAfterFinishGame() {//Function to hide the information modal window after finishing game
+    newGameButton.addEventListener('click', newGame);
+    rollDiceButton.addEventListener('click', endAlert);
+    holdButton.addEventListener('click', endAlert);
+    modalInfo.style.display = 'none';
+}
+
+function ModalInfoAfterFinishGameCloseCrossButtons() {//Function which removes listener on cross et close buttons on information modal window and add new by calling the hideModalInfoAfterFinsihGame function
+    modalInfoCrossClose.removeEventListener('click', hideModalInfo);
+    modalInfoCrossClose.removeEventListener('click', hideModalInfoAfter1);
+    modalInfoCrossClose.addEventListener('click', hideModalInfoAfterFinishGame);
+    modalInfoButtonClose.removeEventListener('click', hideModalInfo);
+    modalInfoButtonClose.removeEventListener('click', hideModalInfoAfter1);
+    modalInfoButtonClose.addEventListener('click', hideModalInfoAfterFinishGame);    
 }
 /* END of Modal Window with information */
 
@@ -298,12 +317,7 @@ function hold() {// function to add the current score to the global score and ve
                         showModalInfo('***** FELICITATION *****\nLe joueur 1 a gagné en atteignant le 1er les 100 points.');
                         modalInfo.style.display = 'block';
                         newGameTag = false;
-                        /* Remove events on buttons Roll Dice and Hold and put a new one to show a message for the end of game */
-                        rollDiceButton.removeEventListener('click', rollDice);
-                        rollDiceButton.addEventListener('click', endAlert);
-                        holdButton.removeEventListener('click', hold);
-                        holdButton.addEventListener('click', endAlert);
-                        ModalInfoCloseCrossButtons();
+                        ModalInfoAfterFinishGameCloseCrossButtons();
                     } else {
                         newPlayer(2);
                     }
@@ -315,12 +329,7 @@ function hold() {// function to add the current score to the global score and ve
                         showModalInfo('***** FELICITATION *****\nLe joueur 2 a gagné en atteignant le 1er les 100 points.');
                         modalInfo.style.display = 'block';
                         newGameTag = false;
-                        /* Remove events on buttons Roll Dice and Hold and put a new one to show a message for the end of game */
-                        rollDiceButton.removeEventListener('click', rollDice);
-                        rollDiceButton.addEventListener('click', endAlert);
-                        holdButton.removeEventListener('click', hold);
-                        holdButton.addEventListener('click', endAlert);
-                        ModalInfoCloseCrossButtons();
+                        ModalInfoAfterFinishGameCloseCrossButtons();
                     } else {
                         newPlayer(1);
                     }
