@@ -170,6 +170,92 @@ body {
   color: white;
 }
 
+@-webkit-keyframes moveButtonClose {
+  0% {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+  2% {
+    -webkit-transform: translate(5px, 0);
+            transform: translate(5px, 0);
+    transform: translate(5px, 0);
+  }
+  4% {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+  6% {
+    -webkit-transform: translate(5px, 0);
+            transform: translate(5px, 0);
+    transform: translate(5px, 0);
+  }
+  8% {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+  10% {
+    -webkit-transform: translate(5px, 0);
+            transform: translate(5px, 0);
+    transform: translate(5px, 0);
+  }
+  12% {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+  100% {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes moveButtonClose {
+  0% {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+  2% {
+    -webkit-transform: translate(5px, 0);
+            transform: translate(5px, 0);
+    transform: translate(5px, 0);
+  }
+  4% {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+  6% {
+    -webkit-transform: translate(5px, 0);
+            transform: translate(5px, 0);
+    transform: translate(5px, 0);
+  }
+  8% {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+  10% {
+    -webkit-transform: translate(5px, 0);
+            transform: translate(5px, 0);
+    transform: translate(5px, 0);
+  }
+  12% {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+  100% {
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+}
+
 /* END of Modal Window */
 @media screen and (min-width: 350px) and (max-width: 500px) {
   /* Reduce font size and dice box size for resolution between 350px and 500px */

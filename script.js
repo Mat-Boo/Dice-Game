@@ -49,6 +49,7 @@ function showModalInfo(textToDisplay) {//Function to display the information mod
     rollDiceButton.removeEventListener('click', rollDice);
     holdButton.removeEventListener('click', hold);
     textModalInfo.innerText = textToDisplay;
+    modalInfoButtonClose.style.animation = '2s ease 2s infinite running moveButtonClose';
 }
 
 function hideModalInfo() {//Function to hide the information modal window
