@@ -37,15 +37,6 @@ let player = null;
 /* END of Others variables */
 
 /* Modal Window with information */
-/* let mainHeight = main.clientHeight;
-let styleRowNewGame = rowNewGame.currentStyle || window.getComputedStyle(rowNewGame);
-let topModalInfo = parseInt(mainHeight) + parseInt(styleRowNewGame.marginTop)
-modalInfo.style.top = `${topModalInfo}px`; */
-
-console.log(window.innerHeight);
-console.log(main.clientHeight);
-console.log(modalInfoContent.clientHeight);
-
 function showModalInfo(textToDisplay) {//Function to display the information modal window according to the available space below the game
     let mainHeight = main.clientHeight;
     let styleRowNewGame = rowNewGame.currentStyle || window.getComputedStyle(rowNewGame);
@@ -54,25 +45,20 @@ function showModalInfo(textToDisplay) {//Function to display the information mod
         topModalInfo = `${topModalInfo}px`;
     }
     modalInfo.style.top = topModalInfo;
+    newGameButton.removeEventListener('click', newGame);
+    rollDiceButton.removeEventListener('click', rollDice);
+    holdButton.removeEventListener('click', hold);
     textModalInfo.innerText = textToDisplay;
 }
 
-/* function showModalInfo(textToDisplay) {//Function to display the information modal window
-    let positionModalInfo = '';
-    if (window.innerHeight - main.clientHeight > 276) {
-        positionModalInfo = 'static';
-    }   else {
-        positionModalInfo = 'absolute';
-    }
-    modalInfo.style.position = positionModalInfo;
-    textModalInfo.innerText = textToDisplay;
-} */
-
 function hideModalInfo() {//Function to hide the information modal window
+    newGameButton.addEventListener('click', newGame);
+    rollDiceButton.addEventListener('click', rollDice);
+    holdButton.addEventListener('click', hold);
     modalInfo.style.display = 'none';
 }
 
-function ModalInfoCloseCrossButtons() {//Function which removes listener on cross et close buttons on information modal window and new by calling the hideModalInfo function
+function ModalInfoCloseCrossButtons() {//Function which removes listener on cross et close buttons on information modal window and add new by calling the hideModalInfo function
     modalInfoCrossClose.removeEventListener('click', hideModalInfoAfter1);
     modalInfoCrossClose.addEventListener('click', hideModalInfo)
     modalInfoButtonClose.removeEventListener('click', hideModalInfoAfter1);
@@ -80,6 +66,9 @@ function ModalInfoCloseCrossButtons() {//Function which removes listener on cros
 }
 
 function hideModalInfoAfter1() {//Function to hide the information modal window after playing 1 with dice but current score et dice still displayed
+    newGameButton.addEventListener('click', newGame);
+    rollDiceButton.addEventListener('click', rollDice);
+    holdButton.addEventListener('click', hold);
     modalInfo.style.display = 'none';
     if (player === 1) {
         player1CurrentScore.innerText = 0;
@@ -90,7 +79,7 @@ function hideModalInfoAfter1() {//Function to hide the information modal window 
     }
 }
 
-function ModalInfoAfter1CloseCrossButtons() {//Function which removes listener on cross et close buttons on information modal window and new by calling the hideModalInfoAfter1 function
+function ModalInfoAfter1CloseCrossButtons() {//Function which removes listener on cross et close buttons on information modal window and add new by calling the hideModalInfoAfter1 function
     modalInfoCrossClose.removeEventListener('click', hideModalInfo);
     modalInfoCrossClose.addEventListener('click', hideModalInfoAfter1);
     modalInfoButtonClose.removeEventListener('click', hideModalInfo);
@@ -184,7 +173,6 @@ function gameRules() {//Function to display the rules of game when starts a new 
         Le premier joueur qui atteint les 100 points sur le score global gagne le jeu.`);
     modalInfo.style.top = 0;
     modalInfo.style.display = 'block';
-    
 }
 
 function rollDice() {// Function to simulate the roll of dice
