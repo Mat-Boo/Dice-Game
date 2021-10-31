@@ -12,13 +12,12 @@ let player2CurrentScore = document.querySelector('.roundScoreBox-player2 .roundS
 let rollDiceButton = document.querySelector('.rollDice-button');
 let holdButton = document.querySelector('.hold-button');
 let rowsDice = document.querySelectorAll('.row-dice');
-let dicePoint1 = document.querySelector('.row-dice .point1');
-let dicePoint2 = document.querySelector('.row-dice .point2');
-let dicePoint3 = document.querySelector('.row-dice .point3');
-let dicePoint4 = document.querySelector('.row-dice .point4');
-let dicePoint5 = document.querySelector('.row-dice .point5');
-let dicePoint6 = document.querySelector('.row-dice .point6');
-let dicePoint7 = document.querySelector('.row-dice .point7');
+let dicePoints1 = document.querySelectorAll('.row-dice .point1');
+let dicePoints2 = document.querySelectorAll('.row-dice .point2');
+let dicePoints3 = document.querySelectorAll('.row-dice .point3');
+let dicePoints4 = document.querySelectorAll('.row-dice .point4');
+let dicePoints5 = document.querySelectorAll('.row-dice .point5');
+let dicePoints6 = document.querySelectorAll('.row-dice .point6');
 let modalInfo = document.querySelector('#modalInfo');
 let textModalInfo = document.querySelector('#modalInfo p');
 let modalInfoCrossClose = document.querySelector('#modalInfo .btn-close');
@@ -198,79 +197,26 @@ function gameRules() {//Function to display the rules of game when starts a new 
 function rollDice() {// Function to simulate the roll of dice
     if (newGameTag) {// Control if game is running
         let result = Math.floor(Math.random() * 6) + 1; //generate a random number between [1 - 6]
-        switch (result) {//According to the value of result, display the points on dice
-            case 1:
-                for (let rowDice of rowsDice) {
-                    rowDice.style.display = 'flex';
-                }
-                dicePoint1.style.color = 'white';
-                dicePoint2.style.color = 'white';
-                dicePoint3.style.color = 'white';
-                dicePoint4.style.color = 'rgb(235, 77, 76)';
-                dicePoint5.style.color = 'white';
-                dicePoint6.style.color = 'white';
-                dicePoint7.style.color = 'white';
-                break;
-            case 2:
-                for (let rowDice of rowsDice) {
-                    rowDice.style.display = 'flex';
-                }
-                dicePoint1.style.color = 'white';
-                dicePoint2.style.color = 'rgb(235, 77, 76)';
-                dicePoint3.style.color = 'white';
-                dicePoint4.style.color = 'white';
-                dicePoint5.style.color = 'white';
-                dicePoint6.style.color = 'rgb(235, 77, 76)';
-                dicePoint7.style.color = 'white';
-                break;
-            case 3:
-                for (let rowDice of rowsDice) {
-                    rowDice.style.display = 'flex';
-                }
-                dicePoint1.style.color = 'white';
-                dicePoint2.style.color = 'rgb(235, 77, 76)';
-                dicePoint3.style.color = 'white';
-                dicePoint4.style.color = 'rgb(235, 77, 76)';
-                dicePoint5.style.color = 'white';
-                dicePoint6.style.color = 'rgb(235, 77, 76)';
-                dicePoint7.style.color = 'white';
-                break;
-            case 4:
-                for (let rowDice of rowsDice) {
-                    rowDice.style.display = 'flex';
-                }
-                dicePoint1.style.color = 'rgb(235, 77, 76)';
-                dicePoint2.style.color = 'rgb(235, 77, 76)';
-                dicePoint3.style.color = 'white';
-                dicePoint4.style.color = 'white';
-                dicePoint5.style.color = 'white';
-                dicePoint6.style.color = 'rgb(235, 77, 76)';
-                dicePoint7.style.color = 'rgb(235, 77, 76)';
-                break;     
-            case 5:
-                for (let rowDice of rowsDice) {
-                    rowDice.style.display = 'flex';
-                }
-                dicePoint1.style.color = 'rgb(235, 77, 76)';
-                dicePoint2.style.color = 'rgb(235, 77, 76)';
-                dicePoint3.style.color = 'white';
-                dicePoint4.style.color = 'rgb(235, 77, 76)';
-                dicePoint5.style.color = 'white';
-                dicePoint6.style.color = 'rgb(235, 77, 76)';
-                dicePoint7.style.color = 'rgb(235, 77, 76)';
-                break;
-            case 6:
-                for (let rowDice of rowsDice) {
-                    rowDice.style.display = 'flex';
-                }
-                dicePoint1.style.color = 'rgb(235, 77, 76)';
-                dicePoint2.style.color = 'rgb(235, 77, 76)';
-                dicePoint3.style.color = 'rgb(235, 77, 76)';
-                dicePoint4.style.color = 'white';
-                dicePoint5.style.color = 'rgb(235, 77, 76)';
-                dicePoint6.style.color = 'rgb(235, 77, 76)';
-                dicePoint7.style.color = 'rgb(235, 77, 76)';
-                break;  
+        for (let rowDice of rowsDice) {
+            rowDice.style.display = 'flex';
+        }
+        let ids = [];// table which will contain ids of circles of dice
+        for (let i = 1 ; i <= 6 ; i++) {
+            if (i === result) {//Display the goods circles of dice according to the variable result
+                eval('dicePoints' + i).forEach(element => {
+                    element.style.color = 'rgb(235, 77, 76)';
+                    ids.push(element.id);//Add ID of circle in array
+                });
+            } else {
+                eval('dicePoints' + i).forEach(element => {
+                    if (!ids.includes(element.id)) {//Control if ID of circle is included in array ids
+                        element.style.color = 'white';
+                    }
+                });
+            }
+        }
+        while (ids.length > 0) {//Empties ids array
+            ids.pop();
         }
         if (result !== 1) {//If the value of result doesn't equal to 1, the value of result is added to current score according to player
             switch (player) {
